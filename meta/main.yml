@@ -1,0 +1,17 @@
+galaxy_info:
+  author: Klaus Thorn <klaus.thorn@programmfabrik.de>
+  description: A role for installing an Apache2 vhost that does proxy tasks for Easydb.
+  company: Programmfabrik GmbH
+  license: MIT
+  min_ansible_version: 2.7
+
+  platforms:
+  - name: Debian
+    versions:
+    - stretch
+
+dependencies:
+- name: blunix.role-apache2
+  src: https://github.com/blunix/role-apache2
+  version: 1.0.2
+  scm: git

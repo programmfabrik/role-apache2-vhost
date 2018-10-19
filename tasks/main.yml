@@ -1,0 +1,50 @@
+- name: "checking if set: apache2_vhost_rewrite_rule_target"
+  fail: 
+    msg: "Please set apache2_vhost_rewrite_rule_target to a syntax like: {{ apache2_vhost_rewrite_rule_target }}"
+  when: apache2_vhost_rewrite_rule_target == "https://as.in.certificate.example.com/$1 [R]"
+
+- name: "checking if set: apache2_vhost_ssl_certificate_file"
+  fail:
+    msg: Please set apache2_vhost_ssl_certificate_file
+  when: apache2_vhost_ssl_certificate_file == '' and apache2_vhost_ssl_enabled
+
+- name: "checking if set: apache2_vhost_ssl_certificate_key_file"
+  fail:
+    msg: Please set apache2_vhost_ssl_certificate_key_file
+  when: apache2_vhost_ssl_certificate_key_file == '' and apache2_vhost_ssl_enabled
+
+# Either:
+- name: deploying http vhost
+  template: 
+    src: etc/apache2/sites-enabled/http.conf.j2
+    dest: /etc/apache2/sites-enabled/easydb.conf
+  when: not apache2_vhost_ssl_enabled
+  notify:
+    - restart apache2 
+# Or:
+- name: deploying https vhost
+  template: 
+    src: etc/apache2/sites-enabled/https.conf.j2
+    dest: /etc/apache2/sites-enabled/easydb.conf
+  when: apache2_vhost_ssl_enabled
+  notify:
+    - restart apache2 
+
+# always checking ...
+
+- name: checking if apache2 config is valid
+  command: apache2ctl configtest
+  register: return_value
+
+- meta: flush_handlers
+
+- name: checking if apache2 is running
+  command: systemctl status apache2
+  register: return_value
+  failed_when: no
+
+- name: fail when apache2 is not running
+  fail:
+    msg: Apache2 is not running!
+  when: return_value.rc == 3
+

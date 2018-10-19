@@ -1,0 +1,6 @@
+<VirtualHost *:80>
+    ServerAdmin {{ apache2_vhost_server_admin }}
+
+    ProxyPass / {{ apache2_vhost_proxy_url }}
+    ProxyPassReverse / {{ apache2_vhost_proxy_url }}
+</VirtualHost>

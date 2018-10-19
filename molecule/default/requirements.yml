@@ -1,0 +1,4 @@
+- name: blunix.role-apache2
+  src: https://github.com/blunix/role-apache2
+  version: 1.0.2
+  scm: git
