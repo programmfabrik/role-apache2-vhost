@@ -5,6 +5,11 @@
     RewriteEngine on
     RewriteRule ^/(.*) {{ apache2_vhost_rewrite_rule_target }}
     {% endif %}
+    {% if not apache2_vhost_rewrite_engine_enabled %}
+    ProxyPass / {{ apache2_vhost_proxy_url }}
+    ProxyPassReverse / {{ apache2_vhost_proxy_url }}
+    {% endif %}
+
 </VirtualHost>
 
 <VirtualHost *:443>
@@ -13,7 +18,7 @@
     SSLEngine on
     SSLCertificateFile  {{ apache2_vhost_ssl_certificate_file }}
     SSLCertificateKeyFile {{ apache2_vhost_ssl_certificate_key_file }}
-    {% if apache2_vhost_ssl_certificate_chain_file == '' %}
+    {% if apache2_vhost_ssl_certificate_chain_file != '' %}
     SSLCertificateChainFile {{ apache2_vhost_ssl_certificate_chain_file }}
     {% endif %}
 

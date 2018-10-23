@@ -1,17 +1,17 @@
 - name: "checking if set: apache2_vhost_rewrite_rule_target"
+  when: apache2_vhost_rewrite_engine_enabled and apache2_vhost_rewrite_rule_target == "https://as.in.certificate.example.com/$1 [R]"
   fail: 
     msg: "Please set apache2_vhost_rewrite_rule_target to a syntax like: {{ apache2_vhost_rewrite_rule_target }}"
-  when: apache2_vhost_rewrite_rule_target == "https://as.in.certificate.example.com/$1 [R]"
 
 - name: "checking if set: apache2_vhost_ssl_certificate_file"
+  when: apache2_vhost_ssl_certificate_file == '' and apache2_vhost_ssl_enabled
   fail:
     msg: Please set apache2_vhost_ssl_certificate_file
-  when: apache2_vhost_ssl_certificate_file == '' and apache2_vhost_ssl_enabled
 
 - name: "checking if set: apache2_vhost_ssl_certificate_key_file"
+  when: apache2_vhost_ssl_certificate_key_file == '' and apache2_vhost_ssl_enabled
   fail:
     msg: Please set apache2_vhost_ssl_certificate_key_file
-  when: apache2_vhost_ssl_certificate_key_file == '' and apache2_vhost_ssl_enabled
 
 # Either:
 - name: deploying http vhost
@@ -34,7 +34,6 @@
 
 - name: checking if apache2 config is valid
   command: apache2ctl configtest
-  register: return_value
 
 - meta: flush_handlers
 
@@ -44,7 +43,7 @@
   failed_when: no
 
 - name: fail when apache2 is not running
+  when: return_value.rc == 3
   fail:
     msg: Apache2 is not running!
-  when: return_value.rc == 3
 

@@ -1,17 +1,19 @@
 ---
 - name: Converge
+  hosts: all
   become: yes
   vars:
     apache2_enabled: yes
+    apache2_vhost_rewrite_engine_enabled: no
+    apache2_vhost_rewrite_rule_target: "https://example.com/$1 [R]"
+    apache2_vhost_ssl_enabled: yes
+    apache2_vhost_ssl_certificate_file: /etc/ssl/private/ssl-cert-snakeoil.key
+    apache2_vhost_ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+    #apache2_vhost_ssl_certificate_chain_file: /etc/ssl/private/ssl-cert-snakeoil.key
     apache2_enable_modules:
       - ssl
       - proxy
       - proxy_http
       - rewrite
-    apache2_vhost_rewrite_rule_target: "https://example.com/$1 [R]"
-    apache2_vhost_ssl_certificate_file: /test
-    apache2_vhost_ssl_certificate_key_file: /test
-    apache2_vhost_ssl_enabled: no
-  hosts: all
   roles:
     - role: role-apache2-vhost
