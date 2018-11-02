@@ -32,18 +32,12 @@
 
 # always checking ...
 
-- name: checking if apache2 config is valid
+- name: checking whether apache2 config is valid
   command: apache2ctl configtest
 
 - meta: flush_handlers
 
-- name: checking if apache2 is running
-  command: systemctl status apache2
-  register: return_value
-  failed_when: no
-
-- name: fail when apache2 is not running
-  when: return_value.rc == 3
-  fail:
-    msg: Apache2 is not running!
-
+- name: checking that apache2 is running
+  systemd:
+    name: apache2
+    state: started
