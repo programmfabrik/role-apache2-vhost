@@ -10,3 +10,5 @@ apache2_vhost_ssl_certificate_file: ''
 apache2_vhost_ssl_certificate_key_file: ''
 #TODO: ^ fail task (if apache2_vhost_ssl_enabled: yes)
 apache2_vhost_ssl_certificate_chain_file: ''
+apache2_vhost_hotfolder_enabled: no
+apache2_vhost_hotfolder_fs_path: ''

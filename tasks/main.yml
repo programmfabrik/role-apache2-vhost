@@ -3,15 +3,20 @@
   fail: 
     msg: "Please set apache2_vhost_rewrite_rule_target to a syntax like: {{ apache2_vhost_rewrite_rule_target }}"
 
-- name: "checking if set: apache2_vhost_ssl_certificate_file"
+- name: "checking if set: apache2_vhost_ssl_certificate_file when apache2_vhost_ssl_enabled"
   when: apache2_vhost_ssl_certificate_file == '' and apache2_vhost_ssl_enabled
   fail:
     msg: Please set apache2_vhost_ssl_certificate_file
 
-- name: "checking if set: apache2_vhost_ssl_certificate_key_file"
+- name: "checking if set: apache2_vhost_ssl_certificate_key_file when apache2_vhost_ssl_enabled"
   when: apache2_vhost_ssl_certificate_key_file == '' and apache2_vhost_ssl_enabled
   fail:
     msg: Please set apache2_vhost_ssl_certificate_key_file
+
+- name: "checking if set: apache2_vhost_hotfolder_fs_path when apache2_vhost_hotfolder_enabled"
+  when: apache2_vhost_hotfolder_fs_path == '' and apache2_vhost_hotfolder_enabled
+  fail:
+    msg: Please set apache2_vhost_hotfolder_fs_path
 
 # Either:
 - name: deploying http vhost
