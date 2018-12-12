@@ -4,20 +4,22 @@
   become: yes
   vars:
     apache2_enabled: yes
-    apache2_vhost_rewrite_engine_enabled: no
-    apache2_vhost_rewrite_rule_target: "https://example.com/$1 [R]"
-    apache2_vhost_ssl_enabled: yes
-    apache2_vhost_ssl_certificate_file: /etc/ssl/private/ssl-cert-snakeoil.key
-    apache2_vhost_ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
-    #apache2_vhost_ssl_certificate_chain_file: /etc/ssl/private/ssl-cert-snakeoil.key
     apache2_enable_modules:
       - ssl
       - proxy
       - proxy_http
       - rewrite
       - dav_fs
+    apache2_vhost_rewrite_engine_enabled: no
+    apache2_vhost_rewrite_rule_target: "https://example.com/$1 [R]"
+    apache2_vhost_ssl_enabled: no
+    apache2_vhost_ssl_certificate_file: /etc/ssl/private/ssl-cert-snakeoil.key
+    apache2_vhost_ssl_certificate_key_file: /etc/ssl/private/ssl-cert-snakeoil.key
+    # apache2_vhost_ssl_certificate_chain_file: /etc/ssl/private/ssl-cert-snakeoil.key
     apache2_vhost_hotfolder_enabled: yes
     apache2_vhost_hotfolder_fs_path: /var/www
+    apache2_vhost_shibboleth_enabled: yes
+    apache2_vhost_kerberos_enabled: yes
 
   roles:
     - role: role-apache2-vhost

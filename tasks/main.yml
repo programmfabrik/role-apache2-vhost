@@ -18,6 +18,26 @@
   fail:
     msg: Please set apache2_vhost_hotfolder_fs_path
 
+- name: installing apache2-mod-shib2
+  when: apache2_vhost_shibboleth_enabled
+  apt:
+    pkg: libapache2-mod-shib2
+    state: present
+
+- name: enabling libapache2-mod-shib2
+  when: apache2_vhost_shibboleth_enabled
+  command: a2enmod shib2 headers
+
+- name: installing libapache2-mod-auth-kerb
+  when: apache2_vhost_kerberos_enabled
+  apt:
+    pkg: libapache2-mod-auth-kerb
+    state: present
+
+- name: enabling libapache2-mod-auth-kerb
+  when: apache2_vhost_kerberos_enabled
+  command: a2enmod auth_kerb headers
+
 # Either:
 - name: deploying http vhost
   template: 

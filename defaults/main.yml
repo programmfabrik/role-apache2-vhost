@@ -2,13 +2,18 @@ apache2_vhost_server_admin: administratoren@programmfabrik.de
 apache2_vhost_proxy_url: http://127.0.0.1:81/
 apache2_vhost_rewrite_engine_enabled: yes
 apache2_vhost_rewrite_rule_target: https://as.in.certificate.example.com/$1 [R]
-#TODO: ^ fail task
-apache2_vhost_ssl_enabled: yes
-#TODO: ^ switch
+# TODO: ^ fail task
+apache2_vhost_ssl_enabled: no
+# TODO: ^ switch
 apache2_vhost_ssl_certificate_file: ''
-#TODO: ^ fail task (if apache2_vhost_ssl_enabled: yes)
+# TODO: ^ fail task (if apache2_vhost_ssl_enabled: yes)
 apache2_vhost_ssl_certificate_key_file: ''
-#TODO: ^ fail task (if apache2_vhost_ssl_enabled: yes)
+# TODO: ^ fail task (if apache2_vhost_ssl_enabled: yes)
 apache2_vhost_ssl_certificate_chain_file: ''
 apache2_vhost_hotfolder_enabled: no
 apache2_vhost_hotfolder_fs_path: ''
+
+apache2_vhost_shibboleth_enabled: no
+apache2_vhost_kerberos_enabled: no
+apache2_vhost_kerberos_service_name: example.com
+apache2_vhost_kerberos_auth_realms: example.com
