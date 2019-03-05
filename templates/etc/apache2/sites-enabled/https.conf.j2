@@ -1,14 +1,14 @@
 <VirtualHost *:80>
     ServerAdmin {{ apache2_vhost_server_admin }}
 
-    {% if apache2_vhost_rewrite_engine_enabled %}
+{% if apache2_vhost_rewrite_engine_enabled %}
     RewriteEngine on
     RewriteRule ^/(.*) {{ apache2_vhost_rewrite_rule_target }}
-    {% endif %}
-    {% if not apache2_vhost_rewrite_engine_enabled %}
+{% endif %}
+{% if not apache2_vhost_rewrite_engine_enabled %}
     ProxyPass / {{ apache2_vhost_proxy_url }}
     ProxyPassReverse / {{ apache2_vhost_proxy_url }}
-    {% endif %}
+{% endif %}
 
 </VirtualHost>
 
@@ -18,11 +18,13 @@
     SSLEngine on
     SSLCertificateFile  {{ apache2_vhost_ssl_certificate_file }}
     SSLCertificateKeyFile {{ apache2_vhost_ssl_certificate_key_file }}
-    {% if apache2_vhost_ssl_certificate_chain_file != '' %}
+{% if apache2_vhost_ssl_certificate_chain_file != '' %}
     SSLCertificateChainFile {{ apache2_vhost_ssl_certificate_chain_file }}
-    {% endif %}
+{% endif %}
 
-    {% if apache2_vhost_hotfolder_enabled %}
+    IncludeOptional sites-enabled/easydb5/include-before/*.conf
+
+{% if apache2_vhost_hotfolder_enabled %}
     AliasMatch ^/upload(.*)$ {{ apache2_vhost_hotfolder_fs_path }}$1
     <Location /upload>
         ProxyPass "!"
@@ -33,8 +35,11 @@
         ErrorDocument 500 "Internal Server Error"
         ErrorDocument 502 "Bad Gateway"
     </Location>
-    {% endif %}
+{% endif %}
 
     ProxyPass / {{ apache2_vhost_proxy_url }}
     ProxyPassReverse / {{ apache2_vhost_proxy_url }}
+
+    IncludeOptional sites-enabled/easydb5/include-after/*.conf
+
 </VirtualHost>
