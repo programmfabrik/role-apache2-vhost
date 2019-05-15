@@ -18,6 +18,19 @@
   fail:
     msg: Please set apache2_vhost_hotfolder_fs_path
 
+- name: "make sure that config directories are created: sites-enabled/easydb5/include-before (and after)"
+  file:
+    state: directory
+    path: "{{ file_item.path }}"
+    #owner: "{{ file_item.owner | default('www-data') }}"
+    #group: "{{ file_item.group | default('www-data') }}"
+    #mode: "{{ file_item.mode | default(0755) }}"
+  loop_control:
+    loop_var: file_item
+  with_items:
+    - path: /etc/apache2/sites-enabled/easydb5/include-before
+    - path: /etc/apache2/sites-enabled/easydb5/include-after
+
 # Either:
 - name: deploying http vhost
   template: 
