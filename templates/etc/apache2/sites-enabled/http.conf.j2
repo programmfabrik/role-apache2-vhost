@@ -1,6 +1,8 @@
 <VirtualHost *:80>
     ServerAdmin {{ apache2_vhost_server_admin }}
 
+    IncludeOptional sites-enabled/easydb5/include-before/*.conf
+
     {% if apache2_vhost_hotfolder_enabled %}
     AliasMatch ^/upload(.*)$ {{ apache2_vhost_hotfolder_fs_path }}$1
     <Location /upload>
@@ -16,4 +18,7 @@
 
     ProxyPass / {{ apache2_vhost_proxy_url }}
     ProxyPassReverse / {{ apache2_vhost_proxy_url }}
+
+    IncludeOptional sites-enabled/easydb5/include-after/*.conf
+
 </VirtualHost>
