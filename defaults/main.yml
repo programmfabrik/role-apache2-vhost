@@ -1,3 +1,4 @@
+apache2_vhost_http_port: 80
 apache2_vhost_server_admin: administratoren@programmfabrik.de
 apache2_vhost_proxy_url: http://127.0.0.1:81/
 apache2_vhost_rewrite_engine_enabled: yes
