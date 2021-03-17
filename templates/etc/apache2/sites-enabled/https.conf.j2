@@ -40,14 +40,14 @@
         ErrorDocument 500 "Internal Server Error"
         ErrorDocument 502 "Bad Gateway"
     </Location>
-    <Location /upload/collection/?*/?*/?*>
+    <LocationMatch /upload/collection/[^/]+/[^/]+/.*>
         Require all granted
         DAV on
         Options -MultiViews
         ErrorDocument 404 "Not Found"
         ErrorDocument 500 "Internal Server Error"
         ErrorDocument 502 "Bad Gateway"
-    </Location>
+    </LocationMatch>
 {% endif %}
 
     ProxyPass / {{ apache2_vhost_proxy_url }}
