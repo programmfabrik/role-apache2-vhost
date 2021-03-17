@@ -30,7 +30,7 @@
         ProxyPass "!"
         <LimitExcept POST PUT DELETE MKCOL COPY MOVE>
             Require all granted
-        </Limit>
+        </LimitExcept>
         <Limit POST PUT DELETE MKCOL COPY MOVE>
             Require all denied
         </Limit>
