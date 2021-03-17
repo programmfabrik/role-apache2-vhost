@@ -41,7 +41,6 @@
         ErrorDocument 502 "Bad Gateway"
     </Location>
     <Location /upload/collection/?*/?*/?*>
-        ProxyPass "!"
         Require all granted
         DAV on
         Options -MultiViews
