@@ -7,13 +7,26 @@
     AliasMatch ^/upload(.*)$ {{ apache2_vhost_hotfolder_fs_path }}$1
     <Location /upload>
         ProxyPass "!"
-        Require all granted
+        <LimitExcept POST PUT DELETE MKCOL COPY MOVE>
+            Require all granted
+        </LimitExcept>
+        <Limit POST PUT DELETE MKCOL COPY MOVE>
+            Require all denied
+        </Limit>
         DAV on
         Options -MultiViews
         ErrorDocument 404 "Not Found"
         ErrorDocument 500 "Internal Server Error"
         ErrorDocument 502 "Bad Gateway"
     </Location>
+    <LocationMatch /upload/collection/[^/]+/[^/]+/.*>
+        Require all granted
+        DAV on
+        Options -MultiViews
+        ErrorDocument 404 "Not Found"
+        ErrorDocument 500 "Internal Server Error"
+        ErrorDocument 502 "Bad Gateway"
+    </LocationMatch>
     {% endif %}
 
     ProxyPass / {{ apache2_vhost_proxy_url }}
