@@ -22,6 +22,7 @@
     SSLCertificateChainFile {{ apache2_vhost_ssl_certificate_chain_file }}
 {% endif %}
 
+    IncludeOptional includes/*.conf
     IncludeOptional sites-enabled/easydb5/include-before/*.conf
 
 {% if apache2_vhost_hotfolder_enabled %}

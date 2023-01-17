@@ -1,6 +1,7 @@
 <VirtualHost *:{{ apache2_vhost_http_port }}>
     ServerAdmin {{ apache2_vhost_server_admin }}
 
+    IncludeOptional includes/*.conf
     IncludeOptional sites-enabled/easydb5/include-before/*.conf
 
     {% if apache2_vhost_hotfolder_enabled %}
